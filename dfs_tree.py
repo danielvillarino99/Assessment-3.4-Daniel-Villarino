@@ -6,27 +6,36 @@ class Node:
 
 
 # Pre-order Traversal: Root -> Left -> Right
-def print_preorder(node):
+def get_preorder(node, result=None):
+    if result is None:
+        result = []
     if node:
-        print(node.val, end=", ")
-        print_preorder(node.left)
-        print_preorder(node.right)
+        result.append(node.val)
+        get_preorder(node.left, result)
+        get_preorder(node.right, result)
+    return result
 
 
 # In-order Traversal: Left -> Root -> Right
-def print_inorder(node):
+def get_inorder(node, result=None):
+    if result is None:
+        result = []
     if node:
-        print_inorder(node.left)
-        print(node.val, end=", ")
-        print_inorder(node.right)
+        get_inorder(node.left, result)
+        result.append(node.val)
+        get_inorder(node.right, result)
+    return result
 
 
 # Post-order Traversal: Left -> Right -> Root
-def print_postorder(node):
+def get_postorder(node, result=None):
+    if result is None:
+        result = []
     if node:
-        print_postorder(node.left)
-        print_postorder(node.right)
-        print(node.val, end=", ")
+        get_postorder(node.left, result)
+        get_postorder(node.right, result)
+        result.append(node.val)
+    return result
 
 
 if __name__ == "__main__":
@@ -61,14 +70,9 @@ if __name__ == "__main__":
     root.right.right.left = Node('N')
     root.right.right.right = Node('O')
 
-    print("PREORDER:")
-    print_preorder(root)
-    print("\n")
-
-    print("INORDER:")
-    print_inorder(root)
-    print("\n")
-
-    print("POSTORDER:")
-    print_postorder(root)
-    print("\n")
+    print("PREORDER :", ", ".join(get_preorder(root)))
+    print()
+    print("INORDER  :", ", ".join(get_inorder(root)))
+    print()
+    print("POSTORDER:", ", ".join(get_postorder(root)))
+    print()
